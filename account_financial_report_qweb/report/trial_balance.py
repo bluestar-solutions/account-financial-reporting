@@ -300,7 +300,7 @@ SELECT
     acc.id,
     acc.group_id,
     acc.code,
-    acc.name,
+    coalesce(t.value, acc.name) AS name,
     coalesce(rag.initial_balance, 0) AS initial_balance,
     coalesce(rag.final_debit - rag.initial_debit, 0) AS debit,
     coalesce(rag.final_credit - rag.initial_credit, 0) AS credit,
@@ -315,6 +315,12 @@ FROM
     account_account acc
     LEFT OUTER JOIN report_general_ledger_qweb_account AS rag
         ON rag.account_id = acc.id AND rag.report_id = %s
+    LEFT JOIN
+        ir_translation t
+            ON
+                acc.id = t.res_id
+                AND t.name = 'account.account,name'
+                AND t.lang = %s
 WHERE
     acc.id in %s
         """
@@ -322,6 +328,7 @@ WHERE
             self.id,
             self.env.uid,
             self.general_ledger_id.id,
+            self.env.user.lang,
             account_ids._ids,
         )
         self.env.cr.execute(query_inject_account, query_inject_account_params)
