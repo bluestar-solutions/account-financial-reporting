@@ -16,7 +16,7 @@
     "website": "https://odoo-community.org/",
     'depends': [
         'account',
-        'account_group',    # account-financial-tools
+        'account_group',  # account-financial-tools
         'date_range',
         'report_xlsx',
         'report',
