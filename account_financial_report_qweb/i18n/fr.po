@@ -1335,22 +1335,22 @@ msgstr "Journal"
 #: model:ir.ui.menu,name:account_financial_report_qweb.journal_report_wizard_menu
 #, python-format
 msgid "Journal Ledger"
-msgstr "Grand Livre"
+msgstr "Journal"
 
 #. module: account_financial_report_qweb
 #: model:ir.ui.view,arch_db:account_financial_report_qweb.report_journal_qweb_base
 msgid "Journal Ledger -"
-msgstr "Livre Mis a Jour"
+msgstr "Journal"
 
 #. module: account_financial_report_qweb
 #: model:ir.actions.act_window,name:account_financial_report_qweb.journal_report_wizard_act_window
 msgid "Journal Ledger Report Wizard"
-msgstr "Mage de Report de Livre Mis a Jour"
+msgstr "Assistant de rapport du journal"
 
 #. module: account_financial_report_qweb
 #: model:ir.actions.report.xml,name:account_financial_report_qweb.action_report_journal_xlsx
 msgid "Journal XLSX"
-msgstr "Fichier XLSX Mis a Jour"
+msgstr "Journal XLSX"
 
 #. module: account_financial_report_qweb
 #: model:ir.model.fields,field_description:account_financial_report_qweb.field_report_journal_qweb_journal_journal_id

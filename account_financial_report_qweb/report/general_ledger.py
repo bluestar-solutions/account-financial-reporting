@@ -533,13 +533,19 @@ SELECT
     a.id AS account_id,
     a.code,
     a.name,
-    COALESCE(i.debit, 0.0) AS initial_debit,
-    COALESCE(i.credit, 0.0) AS initial_credit,
+    case when COALESCE(i.balance, 0.0) > .0
+        then COALESCE(i.balance, 0.0) else .0 end AS initial_debit,
+    case when COALESCE(i.balance, 0.0) < .0
+        then -COALESCE(i.balance, 0.0) else .0 end AS initial_credit,
     COALESCE(i.balance, 0.0) AS initial_balance,
     c.id AS currency_id,
     COALESCE(i.balance_currency, 0.0) AS initial_balance_foreign_currency,
-    COALESCE(f.debit, 0.0) AS final_debit,
-    COALESCE(f.credit, 0.0) AS final_credit,
+    COALESCE(f.debit, 0.0) - COALESCE(i.debit, 0.0) +
+        case when COALESCE(i.balance, 0.0) > .0
+        then COALESCE(i.balance, 0.0) else .0 end AS final_debit,
+    COALESCE(f.credit, 0.0) - COALESCE(i.credit, 0.0) +
+        case when COALESCE(i.balance, 0.0) < .0
+        then -COALESCE(i.balance, 0.0) else .0 end AS final_credit,
     COALESCE(f.balance, 0.0) AS final_balance,
     COALESCE(f.balance_currency, 0.0) AS final_balance_foreign_currency,
     a.is_partner_account
@@ -891,13 +897,19 @@ SELECT
     NOW() AS create_date,
     ap.partner_id,
     ap.partner_name,
-    COALESCE(i.debit, 0.0) AS initial_debit,
-    COALESCE(i.credit, 0.0) AS initial_credit,
+    case when COALESCE(i.balance, 0.0) > .0
+        then COALESCE(i.balance, 0.0) else .0 end AS initial_debit,
+    case when COALESCE(i.balance, 0.0) < .0
+        then -COALESCE(i.balance, 0.0) else .0 end AS initial_credit,
     COALESCE(i.balance, 0.0) AS initial_balance,
     i.currency_id AS currency_id,
     COALESCE(i.balance_currency, 0.0) AS initial_balance_foreign_currency,
-    COALESCE(f.debit, 0.0) AS final_debit,
-    COALESCE(f.credit, 0.0) AS final_credit,
+    COALESCE(f.debit, 0.0) - COALESCE(i.debit, 0.0) +
+        case when COALESCE(i.balance, 0.0) > .0
+        then COALESCE(i.balance, 0.0) else .0 end AS final_debit,
+    COALESCE(f.credit, 0.0) - COALESCE(i.credit, 0.0) +
+        case when COALESCE(i.balance, 0.0) < .0
+        then -COALESCE(i.balance, 0.0) else .0 end AS final_credit,
     COALESCE(f.balance, 0.0) AS final_balance,
     COALESCE(f.balance_currency, 0.0) AS final_balance_foreign_currency
 FROM
